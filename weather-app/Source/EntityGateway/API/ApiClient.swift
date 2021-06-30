@@ -7,7 +7,15 @@
 
 import Foundation
 
-typealias Result<T> = Swift.Result<T, Error>
+typealias Result<T> = Swift.Result<T, ApiError>
+
+public enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case patch = "PATCH"
+    case delete = "DELETE"
+}
 
 protocol ApiRequest {
     var urlRequest: URLRequest { get }
@@ -44,21 +52,24 @@ class ApiClientImpl: ApiClient {
                     completion: @escaping (Result<ApiResponse<T>>) -> Void) where T : Decodable {
         let dataTask = urlSession.dataTask(with: request.urlRequest) { (data, response, error) in
             guard let httpUrlResponse = response as? HTTPURLResponse else {
-                completion(.failure(NetworkRequestError(error: error)))
+                completion(.failure(ApiError(error: error, data: nil, httpUrlResponse: nil)))
                 return
             }
-            
-            let successRange = 200...299
-            if successRange.contains(httpUrlResponse.statusCode) {
+           
+            switch httpUrlResponse.statusCode {
+            case 200..<300:
                 do {
                     let response = try ApiResponse<T>(data: data,
                                                       httpUrlResponse: httpUrlResponse)
                     completion(.success(response))
                 } catch {
-                    completion(.failure(error))
+                    completion(.failure(ApiError(error: error,
+                                                 data: nil,
+                                                 httpUrlResponse: httpUrlResponse)))
                 }
-            } else {
-                completion(.failure(ApiError(data: data,
+            default:
+                completion(.failure(ApiError(error: error,
+                                             data: data,
                                              httpUrlResponse: httpUrlResponse)))
             }
         }

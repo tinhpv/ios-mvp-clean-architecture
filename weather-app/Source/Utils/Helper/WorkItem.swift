@@ -7,7 +7,7 @@
 
 import Foundation
 
-class WorkItem {
+final class WorkItem {
     private var pendingRequestWorkItem: DispatchWorkItem?
     func perform(after: TimeInterval, _ block: @escaping () -> Void) {
         // Cancel the currently pending item

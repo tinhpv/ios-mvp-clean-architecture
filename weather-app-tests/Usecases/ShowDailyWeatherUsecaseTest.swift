@@ -43,7 +43,7 @@ class ShowDailyWeatherUsecaseTest: XCTestCase {
         let cityName = "abcyxztest"
         let unit = "metric"
         let days = 7
-        let expectedResult: Result<[Weather]> = Result.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error fetching weather data"]))
+        let expectedResult: Result<[Weather]> = Result.failure(ApiError.createApiError(message: "Error test"))
         
         weatherGatewaySpy.returnedDailyWeatherResult = expectedResult
         let fetchWeatherExpectation = expectation(description: "fetch daily weather expectation")

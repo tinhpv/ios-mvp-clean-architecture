@@ -67,7 +67,7 @@ extension WeatherController: WeatherView {
     }
     
     func onFailure(message: String) {
-        showAlert(title: "Error!", message: message)
+        showAlert(title: "Oops!", message: message)
     }
 }
 

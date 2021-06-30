@@ -28,11 +28,12 @@ extension ApiWeather {
         let avgTemp = (temp.max + temp.min) / 2
         let weatherIcon = weatherDetail.first?.icon
         let weatherDesc = weatherDetail.first?.description
+        let iconUrl = URL(string: "\(AppConfiguration.apiBaseURL)/img/w/\(weatherIcon ?? "").png")
         return .init(date: dt,
                      avgTemparature: Int(avgTemp.rounded()),
                      pressure: pressure,
                      humidity: humidity,
                      description: weatherDesc,
-                     icon: weatherIcon)
+                     iconUrl: iconUrl)
     }
 }

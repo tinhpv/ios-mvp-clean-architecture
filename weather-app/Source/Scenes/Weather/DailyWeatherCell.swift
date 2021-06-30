@@ -70,6 +70,6 @@ class DailyWeatherCell: UITableViewCell, NameIdentifiable {
         pressureLabel.text = "Pressure: \(weather.pressure ?? 0)"
         humidityLabel.text = "Humidity: \(weather.humidity ?? 0)%"
         descriptionLabel.text = "Description: " + (weather.description ?? "")
-        weatherIcon.kf.setImage(with: URL(string: "https://openweathermap.org/img/w/\(weather.icon ?? "").png"))
+        weatherIcon.kf.setImage(with: weather.iconUrl)
     }
 }

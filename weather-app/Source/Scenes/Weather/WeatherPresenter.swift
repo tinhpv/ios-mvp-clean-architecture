@@ -37,7 +37,7 @@ class WeatherPresenterImpl: WeatherPresenter {
     
     func fetchDailyWeather(for cityName: String, within days: Int = 7, unit: String = "metric") {
         guard !cityName.isEmpty, cityName.count > 3 else {
-            self.view?.onFailure(message: "City's name must be at greater than 3 characters")
+            self.view?.onFailure(message: .invalidLengthError)
             return
         }
         
@@ -46,7 +46,7 @@ class WeatherPresenterImpl: WeatherPresenter {
             self?.view?.hideLoadingView()
             switch result {
             case let .failure(error):
-                self?.view?.onFailure(message: error.localizedDescription)
+                self?.view?.onFailure(message: error.localizedMessage)
             case let .success(dailyWeather):
                 self?.dailyWeather = dailyWeather
                 self?.view?.onSuccessFetchWeather()
@@ -57,5 +57,4 @@ class WeatherPresenterImpl: WeatherPresenter {
     func weather(on day: Int) -> Weather {
         return self.dailyWeather[day]
     }
-    
 }

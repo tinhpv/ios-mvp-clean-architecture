@@ -78,7 +78,7 @@ class WeatherPresenterTest: XCTestCase {
     func test_FetchFailure_onFailure_triggeredWithMsg() {
         // Given
         let expectedMessage = "Test error message"
-        let expectedError = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: expectedMessage])
+        let expectedError = ApiError.createApiError(message: expectedMessage)
         showDailyWeatherUseCaseStub.result = .failure(expectedError)
         
         // When

@@ -18,7 +18,7 @@ struct ApiResponse<T: Decodable> {
             self.httpUrlResponse = httpUrlResponse
             self.data = data
         } catch {
-            throw ApiParseError(error: error, httpUrlResponse: httpUrlResponse, data: data)
+            throw ApiError(error: error, data: data, httpUrlResponse: httpUrlResponse)
         }
     }
 }

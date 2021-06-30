@@ -13,5 +13,5 @@ struct Weather {
     var pressure: Int?
     var humidity: Int?
     var description: String?
-    var icon: String?
+    var iconUrl: URL?
 }
